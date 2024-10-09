@@ -18,36 +18,36 @@ class AuthController extends Controller
     }
 
     public function login(Request $request)
-{
+    {
 
-    $fields = $request->validate([
-        'user' => 'required|string',
-        'password' => 'required|string'
-    ]);
+        $fields = $request->validate([
+            'user' => 'required|string',
+            'password' => 'required|string'
+        ]);
 
-    
-    if (Auth::attempt(['user' => $fields['user'], 'password' => $fields['password']])) {
-        $user = Auth::user();
-        
-        $usersCanLogin = UserRoles::whereIn('role_id',[1,19,20,21])->pluck('user_id');
-      
-        if (  $usersCanLogin->contains($user->id)) {
-            return redirect()->route('dashboard');
+
+        if (Auth::attempt(['user' => $fields['user'], 'password' => $fields['password']])) {
+            $user = Auth::user();
+
+            $usersCanLogin = UserRoles::whereIn('role_id', [1, 19, 20, 21])->pluck('user_id');
+
+            if ($usersCanLogin->contains($user->id)) {
+                return redirect()->route('dashboard');
+            }
         }
-    }
 
-    
-    return Inertia::render('Guest/Dashboard/dashboard', [
-        'errors' => ['user' => 'The provided credentials are incorrect.'],
-        'user' => $fields['user'],
-        'auth_error' => true, 
-    ]);
-}
+
+        return Inertia::render('Guest/Dashboard/dashboard', [
+            'errors' => ['user' => 'The provided credentials are incorrect.'],
+            'user' => $fields['user'],
+            'auth_error' => true,
+        ]);
+    }
 
 
     public function logout(Request $request)
-{
-    Auth::logout();
-    return redirect()->route('guest'); 
-}
+    {
+        Auth::logout();
+        return redirect()->route('guest');
+    }
 }
