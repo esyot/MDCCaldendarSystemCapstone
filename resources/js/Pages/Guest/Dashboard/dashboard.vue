@@ -188,32 +188,6 @@ const toggleLogIn = () => {
             </div>
         </div>
     </div>
-
-    <div
-        v-if="isModalOpen"
-        class="flex fixed inset-0 bg-gray-800 justify-center items-center bg-opacity-50"
-    >
-        <div class="bg-white p-4 rounded">
-            <p><strong>Title:</strong> {{ selectedEvent.title }}</p>
-            <p><strong>Description:</strong> {{ selectedEvent.description }}</p>
-            <p>
-                <strong>Date Start:</strong>
-                {{ formatTime(selectedEvent.time_start) }}
-            </p>
-            <p>
-                <strong>Date End:</strong>
-                {{ formatTime(selectedEvent.time_end) }}
-            </p>
-            <div class="flex justify-end">
-                <button
-                    @click="closeModal"
-                    class="mt-4 p-2 bg-blue-500 text-white rounded"
-                >
-                    Close
-                </button>
-            </div>
-        </div>
-    </div>
 </template>
 
 <script>
