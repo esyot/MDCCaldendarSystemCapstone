@@ -34,17 +34,16 @@ class PageController extends Controller
         ]);
     }
 
-    public function index()
-    {
 
-        return Inertia::render('Guest/Dashboard/dashboard');
-
-    }
 
     public function guest()
     {
+        $events = Event::all();
+        $events_today = Event::where('date', today())->get();
 
-
-        return Inertia::render('Guest/Dashboard/dashboard');
+        return Inertia::render('Guest/Dashboard/dashboard', [
+            'events' => $events,
+            'events_today' => $events_today,
+        ]);
     }
 }

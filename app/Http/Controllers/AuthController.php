@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
+use App\Models\Event;
 use App\Models\UserRoles;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -36,11 +38,17 @@ class AuthController extends Controller
             }
         }
 
+        $events = Event::all();
+        $events_today = Event::where('date', today())->get();
+
+
 
         return Inertia::render('Guest/Dashboard/dashboard', [
             'errors' => ['user' => 'The provided credentials are incorrect.'],
             'user' => $fields['user'],
             'auth_error' => true,
+            'events' => $events,
+            'events_today' => $events_today,
         ]);
     }
 

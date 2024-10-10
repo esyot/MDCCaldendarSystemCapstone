@@ -9,11 +9,9 @@ use Inertia\Inertia;
 use App\Http\Middleware\CheckUserRolesAndPermissions;
 
 // Public routes
-Route::get('/', function () {
-    return Inertia::render('Guest/Dashboard/dashboard');
-});
+Route::get('/', [PageController::class, 'guest']);
 
-Route::get('/guest',  [PageController::class, 'guest'])->name('guest');
+Route::get('/guest', [PageController::class, 'guest'])->name('guest');
 
 Route::get('/guest_calendar', function () {
     return Inertia::render('Guest/Calendar/calendar');
