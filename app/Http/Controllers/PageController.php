@@ -42,8 +42,8 @@ class PageController extends Controller
             return redirect()->route('dashboard');
         }
 
-        $events = Event::where('isApprovedByEventCoordinator', true)->where('isApprovedAdmin', true)->get();
-        $events_today = Event::where('isApprovedByEventCoordinator', true)->where('isApprovedAdmin', true)->where('date', today())->get();
+        $events = Event::where('isApprovedByVenueCoordinator', true)->where('isApprovedByAdmin', true)->get();
+        $events_today = Event::where('isApprovedByVenueCoordinator', true)->where('isApprovedByAdmin', true)->where('date', today())->get();
 
         return Inertia::render('Guest/Dashboard/dashboard', [
             'events' => $events,
