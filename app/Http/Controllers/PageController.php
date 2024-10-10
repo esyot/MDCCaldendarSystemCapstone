@@ -38,8 +38,12 @@ class PageController extends Controller
 
     public function guest()
     {
-        $events = Event::all();
-        $events_today = Event::where('date', today())->get();
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+
+        $events = Event::where('isApprovedByEventCoordinator', true)->where('isApprovedAdmin', true)->get();
+        $events_today = Event::where('isApprovedByEventCoordinator', true)->where('isApprovedAdmin', true)->where('date', today())->get();
 
         return Inertia::render('Guest/Dashboard/dashboard', [
             'events' => $events,

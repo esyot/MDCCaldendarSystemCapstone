@@ -38,8 +38,10 @@ class AuthController extends Controller
             }
         }
 
-        $events = Event::all();
-        $events_today = Event::where('date', today())->get();
+        $events = Event::where('isApprovedByEventCoordinator', true)->where('isApprovedAdmin', true)->get();
+        $events_today = Event::where('isApprovedByEventCoordinator', true)->where('isApprovedAdmin', true)->where('date', today())->get();
+
+
 
 
 
@@ -57,5 +59,21 @@ class AuthController extends Controller
     {
         Auth::logout();
         return redirect()->route('guest');
+    }
+
+    public function authCheck(Request $request)
+    {
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+
+        $events = Event::where('isApprovedByEventCoordinator', true)->where('isApprovedAdmin', true)->get();
+        $events_today = Event::where('isApprovedByEventCoordinator', true)->where('isApprovedAdmin', true)->where('date', today())->get();
+
+        return Inertia::render('Guest/Dashboard/dashboard', [
+            'error' => 'Your account access has been removed.',
+            'events' => $events,
+            'events_today' => $events_today,
+        ]);
     }
 }

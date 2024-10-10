@@ -188,11 +188,40 @@ const toggleLogIn = () => {
             </div>
         </div>
     </div>
+    <div>
+        <div
+            id="error"
+            v-if="error"
+            class="flex fixed inset-0 bg-gray-800 bg-opacity-50 justify-center items-center"
+            role="alert"
+        >
+            <div class="bg-white rounded-lg shadow-lg max-w-sm w-full">
+                <div
+                    class="flex space-y-2 flex-col justify-center items-center p-4"
+                >
+                    <i
+                        class="fas fa-exclamation-triangle text-[60px] text-yellow-500"
+                    ></i>
+                    <p>{{ error }}</p>
+                    <button
+                        @click="errorModal()"
+                        class="w-full px-4 py-2 bg-red-600 text-white hover:bg-red-700 rounded transition duration-200"
+                    >
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
     props: {
+        error: {
+            type: String,
+            default: "",
+        },
         events: {
             type: Array,
         },
@@ -225,6 +254,11 @@ export default {
         },
     },
     methods: {
+        errorModal(error) {
+            document.getElementById("error").classList.add("hidden");
+
+            props.error = false;
+        },
         formatTime(time) {
             const [hours, minutes] = time.split(":");
             const formattedHours = hours % 12 || 12;

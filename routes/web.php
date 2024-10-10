@@ -17,12 +17,8 @@ Route::get('/guest_calendar', function () {
     return Inertia::render('Guest/Calendar/calendar');
 });
 
-Route::get('/login', function () {
-    return Inertia::render('Guest/Dashboard/dashboard', [
-        'errors' => session('errors') ? session('errors')->getBag('default')->getMessages() : [],
-        'auth_error' => session('auth_error') ?? false,
-    ]);
-});
+
+Route::get('/login', [AuthController::class, 'authCheck']);
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
