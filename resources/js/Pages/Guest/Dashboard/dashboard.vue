@@ -145,7 +145,7 @@ const toggleLogIn = () => {
                         class="flex items-center shadow-md mx-2"
                     >
                         <div class="ml-6">
-                            <p class="font-bold">{{ event.title }}</p>
+                            <p class="font-bold">{{ event.name }}</p>
                             <span
                                 >{{ event.date }} at
                                 {{ formatTime(event.time_start) }} -
@@ -175,8 +175,9 @@ const toggleLogIn = () => {
                         class="flex items-center p-2 shadow-md w-[400px] justify-center hover:opacity-50 cursor-pointer transition-transform duration-300 ease-in-out hover:scale-90"
                     >
                         <i class="fa-regular fa-bell fa-light fa-2xl"></i>
-                        <div class="ml-6">
-                            <p class="font-bold">{{ event.title }}</p>
+
+                        <div class="ml-6 w-[300px]">
+                            <p class="font-bold truncate">{{ event.name }}</p>
                             <span
                                 >{{ event.date }} at
                                 {{ formatTime(event.time_start) }} -
@@ -278,3 +279,11 @@ export default {
     },
 };
 </script>
+
+<style>
+.truncate {
+    white-space: nowrap; /* Prevent line breaks */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Add ellipsis (...) for overflowed text */
+}
+</style>
